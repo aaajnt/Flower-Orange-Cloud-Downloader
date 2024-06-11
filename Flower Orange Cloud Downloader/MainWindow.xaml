@@ -26,13 +26,22 @@
                     <Button Height="54" Margin="17,0,0,0" Width="93" Click="Button_Click">
                         <Image Height="42" Width="43" Source="/png/Plus.png"/>
                     </Button>
-                    <Button Height="54" Margin="203,0,0,0" Width="93">
+                    <Button Height="54" Margin="203,0,0,0" Width="93" Click="PauseDownloadButton_Click">
                         <Image Height="42" Width="43" Source="/png/Unavailable.png"/>
                     </Button>
-                    <Button Height="54" Margin="110,0,0,0" Width="93">
-                        <Image Height="42" Width="43" Source="/png/Restart.png"/>
+                    <Button Height="54" Margin="110,0,0,0" Width="93" Click="ResumeDownloadButton_Click">
+                        <Image Height="42" Width="43" Source="/png/Restart.png" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-0.16"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
                     </Button>
-                    <Button Height="54" Margin="296,0,0,0" Width="93">
+                    <Button Height="54" Margin="296,0,0,0" Width="93" Click="DeleteDownloadButton_Click">
                         <Image Height="42" Width="43" Source="/png/Cancel.png"/>
                     </Button>
                     <Button Height="54" Margin="949,0,0,0" Width="93">
@@ -56,6 +65,7 @@
                                     <TreeViewItem Header="TreeViewItem"/>
                                 </TreeViewItem>
                                 <TreeViewItem Header="TreeViewItem" IsExpanded="True">
+                                    <TreeViewItem Header="TreeViewItem"/>
                                     <TreeViewItem Header="TreeViewItem"/>
                                     <TreeViewItem Header="TreeViewItem"/>
                                     <TreeViewItem Header="TreeViewItem"/>

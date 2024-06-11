@@ -29,11 +29,16 @@ namespace Flower_Orange_Cloud_Downloader
     public partial class MainWindow : Window
     {
         public ObservableCollection<DownloadItem> Downloads { get; set; }
+        private ClientEngine engine;
+        private Dictionary<DownloadItem, TorrentManager> downloadManagers;
+
         public MainWindow()
         {
             InitializeComponent();
             Downloads = new ObservableCollection<DownloadItem>();
             DownloadListView.ItemsSource = Downloads;
+            engine = new ClientEngine(new EngineSettings());
+            downloadManagers = new Dictionary<DownloadItem, TorrentManager>();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -74,6 +79,7 @@ namespace Flower_Orange_Cloud_Downloader
                 }
             }
         }
+
         private async Task DownloadFileAsync(string url, DownloadItem downloadItem)
         {
             using (HttpClient client = new HttpClient())
@@ -104,67 +110,151 @@ namespace Flower_Orange_Cloud_Downloader
 
                         // 更新带宽和剩余时间
                         var elapsed = stopwatch.Elapsed.TotalSeconds;
-                        var speed = totalRead / elapsed;
-                        downloadItem.Bandwidth = $"{speed / 1024:0.00} KB/s";
-                        if (totalBytes.HasValue)
+                        if (elapsed > 0)
                         {
-                            var remainingBytes = totalBytes.Value - totalRead;
-                            var remainingTime = remainingBytes / speed;
-                            downloadItem.RemainingTime = $"{remainingTime / 60:0} 分钟 {remainingTime % 60:0} 秒";
+                            var speed = totalRead / elapsed;
+                            downloadItem.Bandwidth = $"{speed / 1024:0.00} KB/s";
+                            if (totalBytes.HasValue)
+                            {
+                                var remainingBytes = totalBytes.Value - totalRead;
+                                if (speed > 0)
+                                {
+                                    var remainingTime = remainingBytes / speed;
+                                    downloadItem.RemainingTime = $"{remainingTime / 60:0} 分钟 {remainingTime % 60:0} 秒";
+                                }
+                                else
+                                {
+                                    downloadItem.RemainingTime = "未知";
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-        private async Task DownloadTorrentFileAsync(string url, DownloadItem downloadItem)
+
+        private async Task DownloadTorrentFileAsync(string torrentFilePath, DownloadItem downloadItem)
         {
-            // 这里你需要使用一个支持Torrent下载的库，例如 MonoTorrent
-            // 你可以在NuGet包管理器中安装MonoTorrent
-            // 安装命令：Install-Package MonoTorrent
+            var torrent = await Torrent.LoadAsync(torrentFilePath);
+            var manager = await engine.AddAsync(torrent, "下载目录路径");
+            downloadManagers[downloadItem] = manager;
 
-            // 以下是一个简单的示例，使用MonoTorrent下载文件
-            using (HttpClient client = new HttpClient())
+            manager.TorrentStateChanged += (sender, args) =>
             {
-                HttpResponseMessage response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
-                response.EnsureSuccessStatusCode();
+                downloadItem.Status = args.NewState.ToString();
+            };
 
-                string torrentFilePath = Path.Combine(Path.GetTempPath(), downloadItem.FileName);
-                using (Stream contentStream = await response.Content.ReadAsStreamAsync(), fileStream = new FileStream(torrentFilePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
+            manager.PeersFound += (sender, args) =>
+            {
+                var speed = manager.Monitor.DownloadSpeed;
+                downloadItem.Bandwidth = $"{speed / 1024:0.00} KB/s";
+                downloadItem.Size = $"{manager.Monitor.DataBytesDownloaded / (1024 * 1024)} MB / {torrent.Size / (1024 * 1024)} MB";
+                if (speed > 0)
                 {
-                    await contentStream.CopyToAsync(fileStream);
+                    var remainingTime = (torrent.Size - manager.Monitor.DataBytesDownloaded) / speed;
+                    downloadItem.RemainingTime = $"{remainingTime / 60:0} 分钟 {remainingTime % 60:0} 秒";
                 }
-
-                var engine = new ClientEngine(new EngineSettings());
-                var torrent = await Torrent.LoadAsync(torrentFilePath);
-                var manager = await engine.AddAsync(torrent, "下载目录路径");
-
-                manager.TorrentStateChanged += (sender, args) =>
+                else
                 {
-                    downloadItem.Status = args.NewState.ToString();
-                };
+                    downloadItem.RemainingTime = "未知";
+                }
+            };
 
-                manager.PeersFound += (sender, args) =>
+            await manager.StartAsync();
+
+            // 轮询检查下载状态
+            while (manager.State != TorrentState.Seeding && manager.State != TorrentState.Stopped)
+            {
+                await Task.Delay(1000);
+                var speed = manager.Monitor.DownloadSpeed;
+                downloadItem.Bandwidth = $"{speed / 1024:0.00} KB/s";
+                downloadItem.Size = $"{manager.Monitor.DataBytesDownloaded / (1024 * 1024)} MB / {torrent.Size / (1024 * 1024)} MB";
+                if (speed > 0)
                 {
-                    downloadItem.Bandwidth = $"{manager.Monitor.DownloadSpeed / 1024:0.00} KB/s";
-                    downloadItem.Size = $"{manager.Monitor.DataBytesDownloaded / (1024 * 1024)} MB / {torrent.Size / (1024 * 1024)} MB";
-                    var remainingTime = (torrent.Size - manager.Monitor.DataBytesDownloaded) / manager.Monitor.DownloadSpeed;
+                    var remainingTime = (torrent.Size - manager.Monitor.DataBytesDownloaded) / speed;
                     downloadItem.RemainingTime = $"{remainingTime / 60:0} 分钟 {remainingTime % 60:0} 秒";
-                };
-
-                await manager.StartAsync();
-
-                // 轮询检查下载状态
-                while (manager.State != TorrentState.Seeding && manager.State != TorrentState.Stopped)
+                }
+                else
                 {
-                    await Task.Delay(1000);
-                    downloadItem.Bandwidth = $"{manager.Monitor.DownloadSpeed / 1024:0.00} KB/s";
-                    downloadItem.Size = $"{manager.Monitor.DataBytesDownloaded / (1024 * 1024)} MB / {torrent.Size / (1024 * 1024)} MB";
-                    var remainingTime = (torrent.Size - manager.Monitor.DataBytesDownloaded) / manager.Monitor.DownloadSpeed;
-                    downloadItem.RemainingTime = $"{remainingTime / 60:0} 分钟 {remainingTime % 60:0} 秒";
+                    downloadItem.RemainingTime = "未知";
                 }
             }
         }
+
+        private async void Window_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                foreach (string file in files)
+                {
+                    if (Path.GetExtension(file).Equals(".torrent", StringComparison.OrdinalIgnoreCase))
+                    {
+                        string fileName = Path.GetFileName(file);
+                        var downloadItem = new DownloadItem
+                        {
+                            FileName = fileName,
+                            Size = "0 MB",
+                            Status = "正在下载",
+                            Bandwidth = "0 KB/s",
+                            RemainingTime = "未知",
+                            LastAttempt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                        };
+                        Downloads.Add(downloadItem);
+
+                        try
+                        {
+                            await DownloadTorrentFileAsync(file, downloadItem);
+                            downloadItem.Status = "下载完成";
+                        }
+                        catch (Exception ex)
+                        {
+                            downloadItem.Status = "下载失败";
+                            MessageBox.Show($"下载失败: {ex.Message}");
+                        }
+                    }
+                }
+            }
+        }
+
+        private async void PauseDownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DownloadListView.SelectedItem is DownloadItem selectedItem && downloadManagers.TryGetValue(selectedItem, out var manager))
+            {
+                if (manager.State == TorrentState.Downloading)
+                {
+                    await manager.StopAsync();
+                    selectedItem.Status = "已暂停";
+                }
+            }
+        }
+
+        private async void ResumeDownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DownloadListView.SelectedItem is DownloadItem selectedItem && downloadManagers.TryGetValue(selectedItem, out var manager))
+            {
+                if (manager.State == TorrentState.Stopped)
+                {
+                    await manager.StartAsync();
+                    selectedItem.Status = "正在下载";
+                }
+            }
+        }
+
+        private async void DeleteDownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DownloadListView.SelectedItem is DownloadItem selectedItem && downloadManagers.TryGetValue(selectedItem, out var manager))
+            {
+                if (manager.State == TorrentState.Downloading || manager.State == TorrentState.Paused)
+                {
+                    await manager.StopAsync();
+                }
+                downloadManagers.Remove(selectedItem);
+                Downloads.Remove(selectedItem);
+            }
+        }
     }
+
     public class DownloadItem : INotifyPropertyChanged
     {
         private string fileName;

@@ -68,3 +68,38 @@ C:\Users\Administrator\Documents\GitHub\Flower_Orange_Cloud_Downloader\Flower Or
 C:\Users\Administrator\Documents\GitHub\Flower_Orange_Cloud_Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower O.6D871A2A.Up2Date
 C:\Users\Administrator\Documents\GitHub\Flower_Orange_Cloud_Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower Orange Cloud Downloader.exe
 C:\Users\Administrator\Documents\GitHub\Flower_Orange_Cloud_Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower Orange Cloud Downloader.pdb
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\Flower Orange Cloud Downloader.exe.config
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\Flower Orange Cloud Downloader.exe
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\Flower Orange Cloud Downloader.pdb
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\iNKORE.UI.WPF.dll
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\iNKORE.UI.WPF.Modern.Controls.dll
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\iNKORE.UI.WPF.Modern.dll
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\Mono.Nat.dll
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\MonoTorrent.dll
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\ReusableTasks.dll
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\System.ValueTuple.dll
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\iNKORE.UI.WPF.pdb
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\iNKORE.UI.WPF.Modern.pdb
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\iNKORE.UI.WPF.Modern.xml
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\iNKORE.UI.WPF.Modern.Controls.pdb
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\iNKORE.UI.WPF.Modern.Controls.xml
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\Mono.Nat.xml
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\MonoTorrent.xml
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\ReusableTasks.xml
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\bin\Debug\System.ValueTuple.xml
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower Orange Cloud Downloader.csproj.AssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\MainWindow.g.cs
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\windows\DownloadUrlWindow.g.cs
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\App.g.cs
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower Orange Cloud Downloader_MarkupCompile.cache
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower Orange Cloud Downloader_MarkupCompile.lref
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\App.baml
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\MainWindow.baml
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\windows\DownloadUrlWindow.baml
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower Orange Cloud Downloader.g.resources
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower_Orange_Cloud_Downloader.Properties.Resources.resources
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower Orange Cloud Downloader.csproj.GenerateResource.cache
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower Orange Cloud Downloader.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower O.6D871A2A.Up2Date
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower Orange Cloud Downloader.exe
+C:\Users\Administrator\Documents\GitHub\Flower-Orange-Cloud-Downloader\Flower Orange Cloud Downloader\obj\Debug\Flower Orange Cloud Downloader.pdb

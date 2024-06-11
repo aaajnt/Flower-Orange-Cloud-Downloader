@@ -21,10 +21,12 @@ namespace Flower_Orange_Cloud_Downloader.windows
     {
         public string DownloadUrl { get; private set; }
         public bool UseTorrent { get; private set; }
+
         public DownloadUrlWindow()
         {
             InitializeComponent();
         }
+
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
             DownloadUrl = UrlTextBox.Text;
@@ -44,6 +46,23 @@ namespace Flower_Orange_Cloud_Downloader.windows
         {
             DialogResult = false;
             Close();
+        }
+
+        private void Border_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                foreach (string file in files)
+                {
+                    if (System.IO.Path.GetExtension(file).Equals(".torrent", StringComparison.OrdinalIgnoreCase))
+                    {
+                        UrlTextBox.Text = file;
+                        UseTorrentCheckBox.IsChecked = true;
+                        break;
+                    }
+                }
+            }
         }
     }
 }
